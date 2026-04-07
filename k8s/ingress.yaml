@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tiny-note-app
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: tiny-notes.lab
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tiny-note-app
+                port:
+                  number: 5000

@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tiny-note-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tiny-note-app
+  template:
+    metadata:
+      labels:
+        app: tiny-note-app
+    spec:
+      containers:
+        - name: tiny-note-app
+          image: tiny-note-app:v4
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: tiny-note-app-config
+                  key: APP_NAME
+            - name: DATA_DIR
+              value: /data
+            - name: APP_MESSAGE
+              valueFrom:
+                secretKeyRef:
+                  name: tiny-note-app-secret
+                  key: APP_MESSAGE
+          volumeMounts:
+            - name: notes-data
+              mountPath: /data
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 5000
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+      volumes:
+        - name: notes-data
+          persistentVolumeClaim:
+            claimName: tiny-note-app-pvc

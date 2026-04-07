@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tiny-note-app
+spec:
+  selector:
+    app: tiny-note-app
+  ports:
+    - port: 5000
+      targetPort: 5000
+  type: NodePort
