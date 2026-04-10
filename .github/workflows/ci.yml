@@ -11,7 +11,7 @@ permissions:
   packages: write
 
 env:
-  IMAGE_NAME: ghcr.io/Graylee0128/tiny-notes-app
+  IMAGE_NAME: ghcr.io/graylee0128/tiny-notes-app
 
 jobs:
   test-build-push:
