@@ -23,7 +23,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run pytest
-        run: pytest -q
+        run: python -m pytest -q
 
       - name: Build Docker image
         run: docker build -t tiny-note-app:ci .
