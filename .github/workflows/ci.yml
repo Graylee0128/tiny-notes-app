@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Verify app syntax
-        run: python -m py_compile app.py
+      - name: Run pytest
+        run: pytest -q
 
       - name: Build Docker image
         run: docker build -t tiny-note-app:ci .
