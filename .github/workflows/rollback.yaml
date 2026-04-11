@@ -9,6 +9,7 @@ on:
 
 env:
   IMAGE_NAME: ghcr.io/graylee0128/tiny-notes-app
+  KUBECONFIG: /home/graylee/.kube/config
 
 jobs:
   rollback:
