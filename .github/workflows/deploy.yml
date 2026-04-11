@@ -1,0 +1,23 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to homelab via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOMELAB_HOST }}
+          username: ${{ secrets.HOMELAB_USER }}
+          password: ${{ secrets.HOMELAB_PASSWORD }}
+          script: |
+            kubectl set image deployment/tiny-note-app tiny-note-app=ghcr.io/graylee0128/tiny-notes-app:latest
+            kubectl rollout status deployment/tiny-note-app
