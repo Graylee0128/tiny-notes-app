@@ -1,0 +1,23 @@
+name: Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Image tag to deploy, e.g. sha-a55be64..."
+        required: true
+
+env:
+  IMAGE_NAME: ghcr.io/graylee0128/tiny-notes-app
+
+jobs:
+  rollback:
+    runs-on: [self-hosted, Linux, X64, homelab, k3s]
+
+    steps:
+      - name: Roll back to exact image
+        run: |
+          kubectl set image deployment/tiny-note-app tiny-note-app=${IMAGE_NAME}:${{ github.event.inputs.image_tag }}
+          kubectl rollout status deployment/tiny-note-app
+          kubectl get deployment tiny-note-app -o jsonpath="{.spec.template.spec.containers[0].image}"
+          echo
