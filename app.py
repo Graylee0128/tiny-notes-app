@@ -66,7 +66,7 @@ def create_note():
 @app.get("/")
 def index():
     return f"""
-    <p>Version: v2</p>
+    <p>Version: v3</p>
     <h1>{APP_NAME}</h1>
     <p>App is running.</p>
     <p>Use /notes, /healthz, /readyz</p>
