@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: tiny-note-app
-          image: ghcr.io/graylee0128/tiny-note-app:latest
+          image: ghcr.io/graylee0128/tiny-notes-app:sha-c33af5f9800140b5f50245d0aa8e1a07e8716b8f
           imagePullPolicy: IfNotPresent
           env:
             - name: APP_NAME
